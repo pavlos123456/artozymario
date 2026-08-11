@@ -33,13 +33,13 @@ jobs:
         buildozer android debug
     
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: artozymario-apk
         path: bin/*.apk
     
     - name: Upload AAB
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: artozymario-aab
         path: bin/*.aab
