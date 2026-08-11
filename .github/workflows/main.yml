@@ -1,4 +1,4 @@
-name: build-android.yml
+name:build-android.yml
 
 on:
   push:
