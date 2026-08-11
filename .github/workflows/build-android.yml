@@ -3,41 +3,46 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:  # Σας επιτρέπει να το τρέχετε χειροκίνητα
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
+    # 1. Αναβάθμιση σε v4
+    - uses: actions/checkout@v4
+
+    # 2. Αναβάθμιση σε v5
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
-    
+
+    # 3. Διόρθωση: Προσπάθεια επανάληψης για το apt-get
     - name: Install dependencies
       run: |
-        sudo apt-get update
+        sudo apt-get clean
+        sudo apt-get update --fix-missing
         sudo apt-get install -y \
           git zip unzip openjdk-17-jdk \
           autoconf libtool pkg-config zlib1g-dev \
           libncurses5-dev libncursesw5-dev libtinfo5 \
           cmake libffi-dev libssl-dev \
           python3-pip
-        pip install buildozer cython
         pip install --upgrade pip
-    
+        pip install buildozer cython
+
     - name: Build with Buildozer
       run: |
         buildozer android debug
-    
+
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: artozymario-apk
         path: bin/*.apk
-    
+
     - name: Upload AAB
       uses: actions/upload-artifact@v4
       with:
