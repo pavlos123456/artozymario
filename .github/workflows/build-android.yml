@@ -26,8 +26,6 @@ jobs:
 
     - name: Accept Android SDK license
       run: |
-        mkdir -p ~/.android
-        echo "count=0" > ~/.android/repositories.cfg
         yes | ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses || true
 
     - name: Build with Buildozer
